@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
-import {Edit, Selection, GanttComponent, Inject, Filter, Sort, Toolbar} from "@syncfusion/ej2-react-gantt";
+import {Edit, Selection, GanttComponent, Inject, Filter, Sort, Toolbar, ContextMenu} from "@syncfusion/ej2-react-gantt";
 import {registerLicense} from '@syncfusion/ej2-base';
 import Layout from "../layouts/Layout.jsx";
+import {DialogComponent} from "@syncfusion/ej2-react-popups";
+import '../assets/css/ganttchart.css'
 
 registerLicense(import.meta.env.VITE_SYFUSION_LICENSE);
 
@@ -26,7 +28,6 @@ export function GanttChart() {
     }
 
     const [ganttData, setGanttData] = useState({});
-
     const taskFields = {
         id: 'TaskID',
         name: 'TaskName',
@@ -38,9 +39,9 @@ export function GanttChart() {
     const EditSettings = {
         allowEditing: true, //แก้ไขชุดข้อมูลนั้น
         mode: 'Dialog',
-        allowTaskbarEditing: true, //แก้ไข taskbar
+        allowTaskbarEditing: false, //แก้ไข taskbar
         allowAdding: true,
-        allowDeleting: true
+        allowDeleting: true,
     }
 
     // const timelineSettings = {
@@ -55,10 +56,11 @@ export function GanttChart() {
     //     }
     // }
 
-
     const toolbarOptions = ['Add','Edit','Delete','Cancel','Update','PrevTimeSpan','NextTimeSpan','ExpandAll','CollapseAll','Search','Indent','Outdent']
 
 
+
+    console.log(ganttData)
 
     return (
         <Layout HeadTitle_en={'Timeline'} HeadTitle_th={'ความคืบหน้า'}>
@@ -70,14 +72,16 @@ export function GanttChart() {
                                 allowSorting={true}
                                 // timelineSettings={timelineSettings}
                                 toolbar={toolbarOptions}
+                                enableContextMenu={true}
                                 // timezone={'UTC'}
                                 // dataFormat={'hh:mm a'}
                 >
-                    <Inject services={[Edit, Selection,Filter,Sort,Toolbar]}/>
+                    <Inject services={[Edit, Selection,Filter,Sort,Toolbar,ContextMenu]}/>
                 </GanttComponent>
             ) : (
                 <p>No data available</p>
             )}
+
         </Layout>
     )
 }
